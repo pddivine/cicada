@@ -1,0 +1,2 @@
+// Load servers
+require('./servers');
