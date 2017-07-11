@@ -1,0 +1,30 @@
+{
+  "name": "cicada",
+  "version": "0.0.0",
+  "description": "A simple application to store favorite words.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pddivine/cicada.git"
+  },
+  "author": "Patrick Divine",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/pddivine/cicada/issues"
+  },
+  "homepage": "https://github.com/pddivine/cicada#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "config": "^1.26.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.1",
+    "node-root.pddivine": "^1.0.0",
+    "typeof.pddivine": "^1.0.0",
+    "value-validator.pddivine": "0.0.3"
+  }
+}
