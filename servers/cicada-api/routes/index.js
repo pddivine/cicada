@@ -1,5 +1,6 @@
 const root = require('node-root.pddivine');
 const v2 = require('value-validator.pddivine');
+const langList = require(`${root}/assets/data/langList`);
 
 const { WordModel } = require(root + '/model/mongo');
 
@@ -101,7 +102,7 @@ module.exports = function (webApp) {
             required: true,
             allowNull: false,
             validation: (v) => {
-              return ['eng'].includes(v);
+              return !!langList[v];
             }
           }
         },
