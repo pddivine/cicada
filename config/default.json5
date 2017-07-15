@@ -1,6 +1,6 @@
 {
   server: {
-    port: 7002,
+    port: 7001,
     internalIP: '0.0.0.0'
   }
 }
