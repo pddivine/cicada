@@ -126,7 +126,7 @@ module.exports = function (webApp) {
 
     Promise.all( words.map(word => {
       // See if exists
-      return WordModel.findOneAndUpdate({ word, lang }, {$addToSet:{ notes }}, {new: true}).exec()
+      return WordModel.findOneAndUpdate({ word: word.toLowerCase(), lang }, {$addToSet:{ notes }}, {new: true}).exec()
       
       .then(wordRes => {
         // If exists update
