@@ -6,34 +6,34 @@ const { WordModel } = require(root + '/model/mongo');
 
 module.exports = function (webApp) {
 
-  webApp.get('/cicada/client-info', (req, res, next) => {
-    const userInformation = {
-      ip:{
-        determined: req.headers['x-forwarded-for'] || 
-        req.connection.remoteAddress || 
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress,
-        headers: {
-          'x-forwarded-for': req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'] : null
-        },
-        connection: {
-          remoteAddress: req.connection && req.connection.remoteAddress ? req.connection.remoteAddress : null,
-          socket: req.connection && req.connection.socket ? req.connection.socket : null
-        },
-        socket: {
-          remoteAddress: req.socket && req.socket.remoteAddress ? req.socket.remoteAddress : null,
-        }
-      },
-      headers: req.headers
-    };
-    return res.status(200).send(userInformation);
-  });
+  // webApp.get('/cicada/client-info', (req, res, next) => {
+  //   const userInformation = {
+  //     ip:{
+  //       determined: req.headers['x-forwarded-for'] || 
+  //       req.connection.remoteAddress || 
+  //       req.socket.remoteAddress ||
+  //       req.connection.socket.remoteAddress,
+  //       headers: {
+  //         'x-forwarded-for': req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'] : null
+  //       },
+  //       connection: {
+  //         remoteAddress: req.connection && req.connection.remoteAddress ? req.connection.remoteAddress : null,
+  //         socket: req.connection && req.connection.socket ? req.connection.socket : null
+  //       },
+  //       socket: {
+  //         remoteAddress: req.socket && req.socket.remoteAddress ? req.socket.remoteAddress : null,
+  //       }
+  //     },
+  //     headers: req.headers
+  //   };
+  //   return res.status(200).send(userInformation);
+  // });
 
   webApp.get('/cicada/words', getManyWords);
   webApp.post('/cicada/words', createManyWords);
 
+  // API to retrieve all words in DB.
   function getManyWords (req, res, next) {
-
     WordModel.find({}).exec()
     .then(data => {
       res.type('application/json');
@@ -59,33 +59,12 @@ module.exports = function (webApp) {
           options: {
             required: true,
             allowNull: false,
-            validation: undefined
-          },
-          schema: {
-            type: String,
-            options: {
-              required: true,
-              allowNull: false,
-              validation: undefined
+            // Ensure each element is not and empty string.
+            validation: function (arr) {
+              return arr.reduce((acc, cur) => {
+                return acc && cur !== '';
+              }, true );
             }
-          }
-        }
-      }
-    },
-    createManyWords: {
-      type: Object,
-      options: {
-        required: true,
-        allowNull: false,
-        validation: undefined
-      },
-      schema: {
-        words: {
-          type: Array,
-          options: {
-            required: true,
-            allowNull: false,
-            validation: undefined
           },
           schema: {
             type: String,
@@ -125,6 +104,7 @@ module.exports = function (webApp) {
     const { words, lang, notes } = req.body;
 
     Promise.all( words.map(word => {
+
       // See if exists
       return WordModel.findOneAndUpdate({ word: word.toLowerCase(), lang }, {$addToSet:{ notes }}, {new: true}).exec()
       

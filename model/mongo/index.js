@@ -10,7 +10,7 @@ const Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
  
 const WordSchema = new Schema({
-    word      : String,
+    word      : { type: String, required: true },
     lang      : { type: String, default: 'eng' },
     notes     : []
 });
