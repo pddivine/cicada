@@ -71,7 +71,9 @@ module.exports = function (webApp) {
             options: {
               required: true,
               allowNull: false,
-              validation: undefined
+              validation: function (word) {
+                return word === word.toLowerCase();
+              }
             }
           }
         },
