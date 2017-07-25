@@ -4,6 +4,9 @@ const app = express();
 const config = require('config');
 const bodyParser = require('body-parser');
 
+const cors = require('cors');
+app.use(cors());
+
 app.use(bodyParser.json());
 //app.use(cookieParser());
 

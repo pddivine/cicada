@@ -26,5 +26,8 @@
     "node-root.pddivine": "^1.0.0",
     "typeof.pddivine": "^1.0.0",
     "value-validator.pddivine": "0.0.3"
+  },
+  "devDependencies": {
+    "cors": "^2.8.4"
   }
 }
